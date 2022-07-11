@@ -1,0 +1,19 @@
+{
+	"name": "codecup-xss",
+	"description": "A simple Node server vulnerable to XSS.",
+	"main": "src/server.js",
+	"scripts": {
+	  "start": "node src/server.js"
+	},
+	"private": true,
+	"contributors": [
+	  "Harrison Katz (hkatz.dev)"
+	],
+	"type": "module",
+	"packageManager": "pnpm@7.5.0",
+	"dependencies": {
+	  "@srnd/codecup-genericwebsite": "^1.0.1",
+	  "koa": "^2.13.4"
+	}
+  }
+  
