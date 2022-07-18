@@ -3,17 +3,19 @@
 	"description": "A simple Node server vulnerable to XSS.",
 	"main": "src/server.js",
 	"scripts": {
-	  "start": "node src/server.js"
+		"start": "node src/server.js"
 	},
 	"private": true,
 	"contributors": [
-	  "Harrison Katz (hkatz.dev)"
+		"Harrison Katz (hkatz.dev)"
 	],
 	"type": "module",
 	"packageManager": "pnpm@7.5.0",
 	"dependencies": {
-	  "@srnd/codecup-genericwebsite": "^1.0.1",
-	  "koa": "^2.13.4"
+		"@koa/router": "^11.0.1",
+		"@srnd/codecup-genericwebsite": "^1.0.1",
+		"handlebars": "^4.7.7",
+		"koa": "^2.13.4",
+		"koa-bodyparser": "^4.3.0"
 	}
-  }
-  
+}
