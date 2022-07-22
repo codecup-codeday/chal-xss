@@ -4,7 +4,7 @@ import fs from 'fs';
 import bodyParser from "koa-bodyparser";
 import Router from "@koa/router";
 import genWeb from "@srnd/codecup-genericwebsite";
-import jsdom from "jsdom";
+import puppeteer from "puppeteer";
 
 const flag = process.env.FLAG || 'test';
 const seed = process.env.SEED || flag;
@@ -12,7 +12,7 @@ const app = new Koa();
 const router = new Router();
 const port = process.env.PORT || 8080;
 const tpl = genWeb.randomTemplate(seed);
-const { JSDOM } = jsdom;
+const browser = await puppeteer.launch({product: "firefox", executablePath: "/usr/bin/firefox"});
 app.use(bodyParser());
 
 router.get('/', (ctx) => {
@@ -31,7 +31,7 @@ router.get('/template', (ctx) => {
 	ctx.body = tpl('hint',fs.readFileSync(path.join(process.cwd(), "/public", 'template.html'), 'utf8')); // idk if this is needed
 });
 
-router.post('/', (ctx) => {
+router.post('/', async (ctx) => {
 	if (ctx.request.body.search == "admin") {
 		ctx.request.body.search = "not admin (nice try)";
 	}
@@ -44,9 +44,14 @@ router.post('/', (ctx) => {
 	<footer>
   	<p><a href="/template">hint</a></p>
   	</footer>`);
-	// TODO: sandbox
-	const dom = new JSDOM(body, { runScripts: "dangerously", pretendToBeVisual: true, resources: "usable"});
-	if (dom.window.document.getElementById("user").textContent === "admin") {
+	const page = await browser.newPage();
+	page.setDefaultTimeout(10000);
+	await page.setContent(body, {waitUntil: "domcontentloaded"});
+	const elem = await page.$("#user");
+	const innerText = await elem.evaluate(el => el.innerText);
+	page.close();
+	console.log(innerText);
+	if (innerText === "admin") {
 		body = tpl('Success!',`<p>Currently: <span id="user">${ctx.request.body.search}</span></p>
 				<p>Flag: ${flag}</p>
 				<form action = "/" method = "POST">

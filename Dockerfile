@@ -1,17 +1,19 @@
-FROM node:alpine3.16
+FROM node:18.6.0-alpine3.16
+
+RUN apk add firefox-esr
 
 RUN corepack enable
 
-RUN corepack prepare pnpm@7.5.0 --activate
+RUN install -d -o node /www
 
-RUN mkdir /www
+USER node
 
 WORKDIR /www
 
 COPY . .
 
-RUN pnpm install --frozen-lockfile --prod
+RUN corepack prepare pnpm@7.6.0 --activate
 
-USER node
+RUN pnpm install --frozen-lockfile --prod
 
 CMD [ "node", "src/server.js" ]
