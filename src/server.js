@@ -73,12 +73,9 @@ router.post('/', async (ctx) => {
 	const page = await browser.newPage();
 	page.setDefaultTimeout(5000);
 	await page.setContent(body, {waitUntil: "domcontentloaded"});
-	const elem = await page.$("#user");
-	const innerText = await elem.evaluate(el => el.innerText);
-	page.close();
-	console.log(innerText);
-	if (innerText === "admin") {
-		body = tpl('Success!',`<p>Currently: <span id="user">${ctx.request.body.search}</span></p>
+	const elems = await page.$$("#user");
+	if (elems.length !== 1) {
+		body = tpl('Login',`<p>ERROR: There must be exactly one element with ID user.</p>
 				<p>Flag: ${flag}</p>
 				<form action = "/" method = "POST">
 				<input type = "text" name = "search" align = "justify"/><br><br>
@@ -94,6 +91,22 @@ router.post('/', async (ctx) => {
         			}
     			</script>
 				</footer>`);
+		page.close();
+	} else {
+		const innerText = await elems[0].evaluate(el => el.innerText);
+		page.close();
+		console.log(innerText);
+		if (innerText === "admin") {
+			body = tpl('Success!',`<p>Currently: <span id="user">${ctx.request.body.search}</span></p>
+					<p>Flag: ${flag}</p>
+					<form action = "/" method = "POST">
+					<input type = "text" name = "search" align = "justify"/><br><br>
+					<input type = "submit" value="Search" />
+					</form>
+					<footer>
+					<p><a href="/template">hint</a></p>
+					</footer>`);
+		}
 	}
 	ctx.body = body;
 });
