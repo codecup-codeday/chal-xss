@@ -32,7 +32,7 @@ router.get('/template', (ctx) => {
 });
 
 router.post('/', async (ctx) => {
-	if (ctx.request.body.includes("admin")) {
+	if (ctx.request.body.search.includes("admin")) {
 		ctx.request.body.search = "not admin (nice try)";
 	}
 	console.log(ctx.request.body.search);
