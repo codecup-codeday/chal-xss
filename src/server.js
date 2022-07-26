@@ -12,7 +12,19 @@ const app = new Koa();
 const router = new Router();
 const port = process.env.PORT || 8080;
 const tpl = genWeb.randomTemplate(seed);
-const browser = await puppeteer.launch({product: "firefox", executablePath: "/usr/bin/firefox"});
+
+let browser;
+const launchCrashResistant = async () => {
+	browser = await puppeteer.launch({product: "firefox", executablePath: "/usr/bin/firefox"});
+	browser.on("disconnected", () => {
+		if (browser.process()) {
+			browser.process().kill();
+		}
+		launchCrashResistant();
+	});
+};
+await launchCrashResistant();
+
 app.use(bodyParser());
 
 router.get('/', (ctx) => {
@@ -45,7 +57,7 @@ router.post('/', async (ctx) => {
   	<p><a href="/template">hint</a></p>
   	</footer>`);
 	const page = await browser.newPage();
-	page.setDefaultTimeout(10000);
+	page.setDefaultTimeout(5000);
 	await page.setContent(body, {waitUntil: "domcontentloaded"});
 	const elem = await page.$("#user");
 	const innerText = await elem.evaluate(el => el.innerText);
