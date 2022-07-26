@@ -35,12 +35,17 @@ router.get('/', (ctx) => {
 	<input type = "submit" value="Search" />
 	</form>
 	<footer>
-  	<p><a href="/template">hint</a></p>
+	<script src="https://creativajs.altervista.org/popup/0.2/creativa-popup.js"></script>
+    <body>
+		<div style="height: 50px"></div>
+        <button onclick="popup()">hint</button>
+    </body>
+    <script>
+        function popup() {
+            CreativaPopup.create('Someone took away our admin privileges! Help us get them back.', 'Hint', 'icon');
+        }
+    </script>
   	</footer>`);
-});
-
-router.get('/template', (ctx) => {
-	ctx.body = tpl('hint',fs.readFileSync(path.join(process.cwd(), "/public", 'template.html'), 'utf8')); // idk if this is needed
 });
 
 router.post('/', async (ctx) => {
@@ -54,7 +59,16 @@ router.post('/', async (ctx) => {
 	<input type = "submit" value="Search" />
 	</form>
 	<footer>
-  	<p><a href="/template">hint</a></p>
+	<script src="https://creativajs.altervista.org/popup/0.2/creativa-popup.js"></script>
+    <body>
+		<div style="height: 50px"></div>
+        <button onclick="popup()">hint</button>
+    </body>
+    <script>
+        function popup() {
+            CreativaPopup.create('Someone took away our admin privileges! Help us get them back.', 'Hint', 'icon');
+        }
+    </script>
   	</footer>`);
 	const page = await browser.newPage();
 	page.setDefaultTimeout(5000);
@@ -69,9 +83,16 @@ router.post('/', async (ctx) => {
 				<form action = "/" method = "POST">
 				<input type = "text" name = "search" align = "justify"/><br><br>
 				<input type = "submit" value="Search" />
-				</form>
-				<footer>
-				<p><a href="/template">hint</a></p>
+				<script src="https://creativajs.altervista.org/popup/0.2/creativa-popup.js"></script>
+    			<body>
+					<div style="height: 50px"></div>
+        			<button onclick="popup()">hint</button>
+    			</body>
+    			<script>
+        			function popup() {
+            			CreativaPopup.create('Someone took away our admin privileges! Help us get them back.', 'Hint', 'icon');
+        			}
+    			</script>
 				</footer>`);
 	}
 	ctx.body = body;
