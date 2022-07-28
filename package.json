@@ -15,6 +15,7 @@
 		"@koa/router": "^11.0.1",
 		"@srnd/codecup-genericwebsite": "^1.0.1",
 		"handlebars": "^4.7.7",
+		"jsdom": "^20.0.0",
 		"koa": "^2.13.4",
 		"koa-bodyparser": "^4.3.0"
 	}
