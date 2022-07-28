@@ -1,6 +1,4 @@
 import Koa from "koa";
-import path from "path";
-import fs from 'fs';
 import bodyParser from "koa-bodyparser";
 import Router from "@koa/router";
 import genWeb from "@srnd/codecup-genericwebsite";
@@ -35,16 +33,9 @@ router.get('/', (ctx) => {
 	<input type = "submit" value="Search" />
 	</form>
 	<footer>
-	<script src="https://creativajs.altervista.org/popup/0.2/creativa-popup.js"></script>
-    <body>
-		<div style="height: 50px"></div>
-        <button onclick="popup()">hint</button>
-    </body>
-    <script>
-        function popup() {
-            CreativaPopup.create('Someone took away our admin privileges! Help us get them back.', 'Hint', 'icon');
-        }
-    </script>
+	<div style="height: 50px"></div>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <button onclick='swal( "Hint" ,  "Someone took away our admin privileges! Help us get them back." )'>hint</button>
   	</footer>`);
 });
 
@@ -59,16 +50,9 @@ router.post('/', async (ctx) => {
 	<input type = "submit" value="Search" />
 	</form>
 	<footer>
-	<script src="https://creativajs.altervista.org/popup/0.2/creativa-popup.js"></script>
-    <body>
-		<div style="height: 50px"></div>
-        <button onclick="popup()">hint</button>
-    </body>
-    <script>
-        function popup() {
-            CreativaPopup.create('Someone took away our admin privileges! Help us get them back.', 'Hint', 'icon');
-        }
-    </script>
+	<div style="height: 50px"></div>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <button onclick='swal( "Hint" ,  "Someone took away our admin privileges! Help us get them back." )'>hint</button>
   	</footer>`);
 	const page = await browser.newPage();
 	page.setDefaultTimeout(5000);
@@ -80,16 +64,10 @@ router.post('/', async (ctx) => {
 				<form action = "/" method = "POST">
 				<input type = "text" name = "search" align = "justify"/><br><br>
 				<input type = "submit" value="Search" />
-				<script src="https://creativajs.altervista.org/popup/0.2/creativa-popup.js"></script>
-    			<body>
-					<div style="height: 50px"></div>
-        			<button onclick="popup()">hint</button>
-    			</body>
-    			<script>
-        			function popup() {
-            			CreativaPopup.create('Someone took away our admin privileges! Help us get them back.', 'Hint', 'icon');
-        			}
-    			</script>
+				<footer>
+				<div style="height: 50px"></div>
+				<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    			<button onclick='swal( "Hint" ,  "Someone took away our admin privileges! Help us get them back." )'>hint</button>
 				</footer>`);
 		page.close();
 	} else {
@@ -104,7 +82,9 @@ router.post('/', async (ctx) => {
 					<input type = "submit" value="Search" />
 					</form>
 					<footer>
-					<p><a href="/template">hint</a></p>
+					<div style="height: 50px"></div>
+					<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    				<button onclick='swal( "Hint" ,  "Someone took away our admin privileges! Help us get them back." )'>hint</button>
 					</footer>`);
 		}
 	}
