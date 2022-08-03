@@ -1,6 +1,7 @@
-import jsdom from "jsdom";
+// Unfortunately, VM2 only works with CommonJS syntax.
+const jsdom = require("jsdom");
 
-export default function detectXSS(htmlSnippet, flag) {
+const detectXSS = (htmlSnippet, flag) => {
 	let output = "";
 
 	const cookieJar = new jsdom.CookieJar();
@@ -29,3 +30,9 @@ export default function detectXSS(htmlSnippet, flag) {
 
 	return output.includes(flag);
 }
+
+module.exports = detectXSS;
+
+module.exports = {
+	detectXSS
+};

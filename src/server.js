@@ -47,7 +47,6 @@ router.get('/template', async (ctx) => {
 router.post('/', async (ctx) => {
 	ctx.body = tpl('Login', vulnerableHTMLSnippet(ctx.request.body.search));
 
-	// TODO: sandbox
 	if (await runXSSDetect(ctx.body, flag)) {
 		ctx.cookies.set("flag", flag, {secure: false, httpOnly: false, overwrite: true});
 	}
