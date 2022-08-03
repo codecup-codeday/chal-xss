@@ -35,7 +35,7 @@ router.get('/', (ctx) => {
 	<footer>
 	<div style="height: 50px"></div>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <button onclick='swal( "Hint" ,  "Someone took away our admin privileges! Help us get them back." )'>hint</button>
+    <button onclick='swal( "Hint" ,  "Someone took away our admin privileges! They left us a Xtremely Sus Site and a empty bag of Chips Ahoy. ARRRGG!" )'>hint</button>
   	</footer>`);
 });
 
@@ -51,8 +51,6 @@ router.post('/', async (ctx) => {
 	</form>
 	<footer>
 	<div style="height: 50px"></div>
-	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <button onclick='swal( "Hint" ,  "Someone took away our admin privileges! Help us get them back." )'>hint</button>
   	</footer>`);
 	const page = await browser.newPage();
 	page.setDefaultTimeout(5000);
@@ -66,8 +64,6 @@ router.post('/', async (ctx) => {
 				<input type = "submit" value="Search" />
 				<footer>
 				<div style="height: 50px"></div>
-				<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    			<button onclick='swal( "Hint" ,  "Someone took away our admin privileges! Help us get them back." )'>hint</button>
 				</footer>`);
 		page.close();
 	} else {
@@ -83,8 +79,6 @@ router.post('/', async (ctx) => {
 					</form>
 					<footer>
 					<div style="height: 50px"></div>
-					<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    				<button onclick='swal( "Hint" ,  "Someone took away our admin privileges! Help us get them back." )'>hint</button>
 					</footer>`);
 		}
 	}
