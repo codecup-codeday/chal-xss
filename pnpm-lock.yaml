@@ -7,6 +7,7 @@ specifiers:
   jsdom: ^20.0.0
   koa: ^2.13.4
   koa-bodyparser: ^4.3.0
+  vm2: ^3.9.10
 
 dependencies:
   '@koa/router': 11.0.1
@@ -15,6 +16,7 @@ dependencies:
   jsdom: 20.0.0
   koa: 2.13.4
   koa-bodyparser: 4.3.0
+  vm2: 3.9.10
 
 packages:
 
@@ -63,6 +65,11 @@ packages:
 
   /acorn-walk/7.2.0:
     resolution: {integrity: sha512-OPdCF6GsMIP+Az+aWfAAOEt2/+iVDKE7oy6lJ098aoe59oAmK76qV6Gw60SbZ8jHuG2wH058GF4pLFbYamYrVA==}
+    engines: {node: '>=0.4.0'}
+    dev: false
+
+  /acorn-walk/8.2.0:
+    resolution: {integrity: sha512-k+iyHEuPgSw6SbuDpGQM+06HQUa04DZ3o+F6CSzXMvvI5KMvnaEqXe+YVe555R9nn6GPt404fos4wcgpw12SDA==}
     engines: {node: '>=0.4.0'}
     dev: false
 
@@ -791,6 +798,15 @@ packages:
   /vary/1.1.2:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
     engines: {node: '>= 0.8'}
+    dev: false
+
+  /vm2/3.9.10:
+    resolution: {integrity: sha512-AuECTSvwu2OHLAZYhG716YzwodKCIJxB6u1zG7PgSQwIgAlEaoXH52bxdcvT8GkGjnYK7r7yWDW0m0sOsPuBjQ==}
+    engines: {node: '>=6.0'}
+    hasBin: true
+    dependencies:
+      acorn: 8.7.1
+      acorn-walk: 8.2.0
     dev: false
 
   /w3c-hr-time/1.0.2:

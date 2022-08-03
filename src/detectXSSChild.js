@@ -1,5 +1,11 @@
-import detectXSS from "./detectXSS.js";
+import { NodeVM } from "vm2";
 
 process.on("message", (data) => {
-	process.send({exploited: detectXSS(data.body, data.flag), requestID: data.requestID});
+	const vm = new NodeVM({
+		console: 'none',
+		require: {
+			external: true,
+		}
+	});
+	process.send({exploited: vm.run(`const {detectXSS} = require("./detectXSS.cjs"); return detectXSS('${data.body.replaceAll(/\n/g, "\\n").replaceAll(/"/g, "\\'")}', "${data.flag}")`), requestID: data.requestID});
 });
