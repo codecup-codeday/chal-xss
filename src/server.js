@@ -22,10 +22,13 @@ const runXSSDetect = (body) => {
 	return new Promise((resolve, reject) => {
 		const currID = (requestID++).toString();
 		const exitRecieved = () => {
+			clearTimeout(timeout);
+			child.off("message", flagRecieved);
 			reject(new Error("Exited (Sorry, please try again)"));
 		};
 		const timeout = setTimeout(() => {
 			child.off("exit", exitRecieved);
+			child.off("message", flagRecieved);
 			child.kill();
 			child = fork(childScript);
 			reject(new Error("Timeout (Please make sure your code runs in under 5 seconds)"));
