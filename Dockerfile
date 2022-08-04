@@ -2,7 +2,7 @@ FROM node:alpine3.16
 
 RUN corepack enable
 
-RUN corepack prepare pnpm@7.5.0 --activate
+RUN corepack prepare pnpm@7.8.0 --activate
 
 RUN mkdir /www
 
