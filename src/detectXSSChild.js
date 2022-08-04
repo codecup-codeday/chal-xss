@@ -1,15 +1,19 @@
-import { NodeVM } from "vm2";
+import { NodeVM, VMScript } from "vm2";
+import fs from "fs";
+
+const script = new VMScript(fs.readFileSync("./detectXSS.cjs"));
 
 process.on("message", (data) => {
 	const vm = new NodeVM({
 		console: 'none',
 		require: {
-			external: true,
+			external: ["jsdom"],
 		}
 	});
 	let flagInfo = {requestID: data.requestID};
 	try {
-		flagInfo.exploited = vm.run(`const {detectXSS} = require("./detectXSS.cjs"); return detectXSS('${data.body.replaceAll(/\n/g, "\\n").replaceAll(/"/g, "\\'")}', "${data.flag}")`);
+		const detectXSS = vm.run(script);
+		flagInfo.exploited = detectXSS(data.body, data.flag);
 	} catch (err) {
 		flagInfo.error = err.message;
 	}

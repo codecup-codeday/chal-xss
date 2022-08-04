@@ -43,7 +43,4 @@ const detectXSS = (htmlSnippet, flag) => {
 }
 
 module.exports = detectXSS;
-
-module.exports = {
-	detectXSS
-};
+module.exports.detectXSS = detectXSS;
