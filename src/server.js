@@ -20,7 +20,7 @@ const launchXSSDetect = () => {
 };
 let child = launchXSSDetect();
 
-const runXSSDetect = (body, flag) => {
+const runXSSDetect = (body) => {
 	return new Promise((resolve, reject) => {
 		const currID = (requestID++).toString();
 		const exitRecieved = () => {
@@ -46,7 +46,7 @@ const runXSSDetect = (body, flag) => {
 		};
 		child.once("exit", exitRecieved);
 		child.on("message", flagRecieved);
-		child.send({body: body, flag: flag, requestID: currID});
+		child.send({body: body, requestID: currID});
 	});
 };
 
@@ -63,7 +63,7 @@ router.get('/template', async (ctx) => {
 router.post('/', async (ctx) => {
 	ctx.body = tpl('Login', vulnerableHTMLSnippet(ctx.request.body.search));
 	try {
-		if (await runXSSDetect(ctx.body, flag)) {
+		if (await runXSSDetect(ctx.body)) {
 			ctx.cookies.set("flag", flag, {secure: false, httpOnly: false, overwrite: true});
 		}
 	} catch(err) {

@@ -13,7 +13,7 @@ process.on("message", (data) => {
 	let flagInfo = {requestID: data.requestID};
 	try {
 		const detectXSS = vm.run(script);
-		flagInfo.exploited = detectXSS(data.body, data.flag);
+		flagInfo.exploited = detectXSS(data.body);
 	} catch (err) {
 		flagInfo.error = err.message;
 	}
