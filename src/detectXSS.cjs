@@ -17,6 +17,7 @@ const detectXSS = (htmlSnippet, flag) => {
 			.on("dir", message => output += message)
 			.on("dirxml", message => output += message);
 
+	let timeout = false;
 	const dom = new jsdom.JSDOM(htmlSnippet, {
 			runScripts: "dangerously",
 			resources: "usable",
@@ -24,10 +25,20 @@ const detectXSS = (htmlSnippet, flag) => {
 			virtualConsole,
 			beforeParse(window) {
 				window.alert = message => window.console.log(message);
+				window.setImmediate = () => {};
+				window.setInterval = () => {};
+				window.clearImmediate = () => {};
+				window.clearInterval = () => {};
+				window.clearTimeout = () => {};
+				window.setTimeout(() => {timeout = true; window.close()}, 5000);
+				window.setTimeout = () => {};
 			}
 	});
-	dom.window.close();
 
+	if (timeout) {
+		throw(new Error("Timeout"));
+	}
+	dom.window.close();
 	return output.includes(flag);
 }
 

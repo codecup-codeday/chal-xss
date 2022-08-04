@@ -21,14 +21,30 @@ const launchXSSDetect = () => {
 let child = launchXSSDetect();
 
 const runXSSDetect = (body, flag) => {
-	return new Promise((resolve) => {
+	return new Promise((resolve, reject) => {
 		const currID = (requestID++).toString();
+		const exitRecieved = () => {
+			reject(new Error("Exited"));
+		};
+		const timeout = setTimeout(() => {
+			child.off("exit", exitRecieved);
+			child.kill();
+			child = launchXSSDetect();
+			reject(new Error("Timeout"));
+		}, 7500);
 		const flagRecieved = (flagInfo) => {
 			if (flagInfo.requestID === currID) {
+				clearTimeout(timeout);
+				child.off("exit", exitRecieved);
 				child.off("message", flagRecieved);
-				resolve(flagInfo.exploited);
+				if (flagInfo.error) {
+					reject(new Error(flagInfo.error));
+				} else {
+					resolve(flagInfo.exploited);
+				}
 			}
-		}
+		};
+		child.once("exit", exitRecieved);
 		child.on("message", flagRecieved);
 		child.send({body: body, flag: flag, requestID: currID});
 	});
@@ -46,9 +62,12 @@ router.get('/template', async (ctx) => {
 
 router.post('/', async (ctx) => {
 	ctx.body = tpl('Login', vulnerableHTMLSnippet(ctx.request.body.search));
-
-	if (await runXSSDetect(ctx.body, flag)) {
-		ctx.cookies.set("flag", flag, {secure: false, httpOnly: false, overwrite: true});
+	try {
+		if (await runXSSDetect(ctx.body, flag)) {
+			ctx.cookies.set("flag", flag, {secure: false, httpOnly: false, overwrite: true});
+		}
+	} catch(err) {
+		ctx.body = tpl('Login', vulnerableHTMLSnippet(`<strong>${err}</strong>`));
 	}
 });
 
