@@ -1,7 +1,7 @@
 import { NodeVM, VMScript } from "vm2";
 import fs from "fs";
 
-const script = new VMScript(fs.readFileSync("./detectXSS.cjs", "utf8"));
+const script = new VMScript(fs.readFileSync(new URL("./detectXSS.cjs", import.meta.url), "utf8"));
 
 process.on("message", (data) => {
 	const vm = new NodeVM({

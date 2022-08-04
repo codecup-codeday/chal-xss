@@ -7,6 +7,7 @@ import genWeb from "@srnd/codecup-genericwebsite";
 import vulnerableHTMLSnippet from "./vulnerableHTMLSnippet.js";
 import { fork } from "child_process";
 
+const childScript = new URL("./detectXSSChild.js", import.meta.url);
 const flag = process.env.FLAG || "test";
 const seed = process.env.SEED || flag;
 const app = new Koa();
@@ -15,7 +16,7 @@ const port = process.env.PORT || 8080;
 const tpl = genWeb.randomTemplate(seed);
 
 let requestID = 0n;
-let child = fork("detectXSSChild.js");
+let child = fork(childScript);
 
 const runXSSDetect = (body) => {
 	return new Promise((resolve, reject) => {
@@ -26,7 +27,7 @@ const runXSSDetect = (body) => {
 		const timeout = setTimeout(() => {
 			child.off("exit", exitRecieved);
 			child.kill();
-			child = fork("detectXSSChild.js");
+			child = fork(childScript);
 			reject(new Error("Timeout (Please make sure your code runs in under 5 seconds)"));
 		}, 7500);
 		const flagRecieved = (flagInfo) => {
@@ -53,7 +54,7 @@ router.get("/", async (ctx) => {
 });
 
 router.get("/template", async (ctx) => {
-	ctx.body = tpl("hint",fs.readFileSync(path.join(process.cwd(), "/public", "template.html"), "utf8"));
+	ctx.body = tpl("hint",fs.readFileSync(new URL("../public/template.html", import.meta.url), "utf8"));
 });
 
 router.post("/", async (ctx) => {
