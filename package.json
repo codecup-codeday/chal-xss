@@ -1,5 +1,6 @@
 {
 	"name": "codecup-xss",
+	"version": "1.0.0",
 	"description": "A simple Node server vulnerable to XSS.",
 	"main": "src/server.js",
 	"scripts": {
