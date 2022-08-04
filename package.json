@@ -7,7 +7,8 @@
 	},
 	"private": true,
 	"contributors": [
-		"Harrison Katz (hkatz.dev)"
+		"Harrison Katz (hkatz.dev)",
+		"Jeff Li"
 	],
 	"type": "module",
 	"packageManager": "pnpm@7.8.0",
