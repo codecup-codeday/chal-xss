@@ -1,7 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@koa/router': ^11.0.1
+  '@koa/router': ^12.0.0
   '@srnd/codecup-genericwebsite': ^1.0.1
   handlebars: ^4.7.7
   jsdom: ^20.0.0
@@ -10,7 +10,7 @@ specifiers:
   vm2: ^3.9.10
 
 dependencies:
-  '@koa/router': 11.0.1
+  '@koa/router': 12.0.0
   '@srnd/codecup-genericwebsite': 1.0.1
   handlebars: 4.7.7
   jsdom: 20.0.0
@@ -20,8 +20,8 @@ dependencies:
 
 packages:
 
-  /@koa/router/11.0.1:
-    resolution: {integrity: sha512-jZ5ISytdHJWUPiXmxIpT/rk7rCRD/gnwYP3WKlQ0kOLWAtCeFbURTlP2zG0VyALKq4NtVMf0uEMFreQJWFOhaw==}
+  /@koa/router/12.0.0:
+    resolution: {integrity: sha512-cnnxeKHXlt7XARJptflGURdJaO+ITpNkOHmQu7NHmCoRinPbyvFzce/EG/E8Zy81yQ1W9MoSdtklc3nyaDReUw==}
     engines: {node: '>= 12'}
     dependencies:
       http-errors: 2.0.0
@@ -79,8 +79,8 @@ packages:
     hasBin: true
     dev: false
 
-  /acorn/8.7.1:
-    resolution: {integrity: sha512-Xx54uLJQZ19lKygFXOWsscKUbsBZW0CPykPhVQdhIeIwrbPmJzqeASDInc8nKBnp/JT6igTs82qPXz069H8I/A==}
+  /acorn/8.8.0:
+    resolution: {integrity: sha512-QOxyigPVrpZ2GXT+PFyZTl6TtOFc5egxHIP9IlQ+RbupQuX4RkT/Bee4/kQuC02Xkzg84JcT7oLYtDIQxp+v7w==}
     engines: {node: '>=0.4.0'}
     hasBin: true
     dev: false
@@ -337,7 +337,7 @@ packages:
       source-map: 0.6.1
       wordwrap: 1.0.0
     optionalDependencies:
-      uglify-js: 3.16.2
+      uglify-js: 3.16.3
     dev: false
 
   /has-symbols/1.0.3:
@@ -461,7 +461,7 @@ packages:
         optional: true
     dependencies:
       abab: 2.0.6
-      acorn: 8.7.1
+      acorn: 8.8.0
       acorn-globals: 6.0.0
       cssom: 0.5.0
       cssstyle: 2.3.0
@@ -777,8 +777,8 @@ packages:
       mime-types: 2.1.35
     dev: false
 
-  /uglify-js/3.16.2:
-    resolution: {integrity: sha512-AaQNokTNgExWrkEYA24BTNMSjyqEXPSfhqoS0AxmHkCJ4U+Dyy5AvbGV/sqxuxficEfGGoX3zWw9R7QpLFfEsg==}
+  /uglify-js/3.16.3:
+    resolution: {integrity: sha512-uVbFqx9vvLhQg0iBaau9Z75AxWJ8tqM9AV890dIZCLApF4rTcyHwmAvLeEdYRs+BzYWu8Iw81F79ah0EfTXbaw==}
     engines: {node: '>=0.8.0'}
     hasBin: true
     requiresBuild: true
@@ -805,7 +805,7 @@ packages:
     engines: {node: '>=6.0'}
     hasBin: true
     dependencies:
-      acorn: 8.7.1
+      acorn: 8.8.0
       acorn-walk: 8.2.0
     dev: false
 
