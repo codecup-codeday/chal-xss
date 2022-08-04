@@ -11,7 +11,6 @@ const detectXSS = (htmlSnippet) => {
 				window.Object.defineProperty(window.document, "cookie", {
 					get: function () {
 						cookieAccessed = true;
-						window.close();
 					}
 				});
 
@@ -24,13 +23,13 @@ const detectXSS = (htmlSnippet) => {
 				window.setTimeout = () => {};
 			}
 	});
-	
+	dom.window.close();
+
 	if (cookieAccessed) {
 		return true;
 	} else if (timeout) {
 		throw(new Error("Timeout (Please make sure your code runs in under 5 seconds)"));
 	} else {
-		dom.window.close();
 		return false;
 	}
 }
