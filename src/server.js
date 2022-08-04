@@ -54,7 +54,7 @@ router.get("/", async (ctx) => {
 });
 
 router.get("/template", async (ctx) => {
-	ctx.body = tpl("hint",fs.readFileSync(new URL("../public/template.html", import.meta.url), "utf8"));
+	ctx.body = tpl("hint",fs.readFileSync(new URL("../public/hint.html", import.meta.url), "utf8"));
 });
 
 router.post("/", async (ctx) => {
