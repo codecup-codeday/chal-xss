@@ -1,30 +1,22 @@
 // Unfortunately, VM2 only works with CommonJS syntax.
 const jsdom = require("jsdom");
 
-const detectXSS = (htmlSnippet, flag) => {
+const detectXSS = (htmlSnippet) => {
 	let output = "";
 
-	const cookieJar = new jsdom.CookieJar();
-	cookieJar.setCookieSync(new jsdom.toughCookie.Cookie({key: "flag", value: flag}), "about:blank");
-
-	const virtualConsole = new jsdom.VirtualConsole();
-	virtualConsole.on("error", message => output += message)
-			.on("warn", message => output += message)
-			.on("info", message => output += message)
-			.on("log", message => output += message)
-			.on("debug", message => output += message)
-			.on("table", message => output += message)
-			.on("dir", message => output += message)
-			.on("dirxml", message => output += message);
-
 	let timeout = false;
+	let cookieAccessed = false;
 	const dom = new jsdom.JSDOM(htmlSnippet, {
 			runScripts: "dangerously",
 			resources: "usable",
-			cookieJar,
-			virtualConsole,
 			beforeParse(window) {
-				window.alert = message => window.console.log(message);
+				window.Object.defineProperty(window.document, "cookie", {
+					get: function () {
+						cookieAccessed = true;
+						window.close();
+					}
+				});
+			
 				window.setImmediate = () => {};
 				window.setInterval = () => {};
 				window.clearImmediate = () => {};
@@ -34,12 +26,15 @@ const detectXSS = (htmlSnippet, flag) => {
 				window.setTimeout = () => {};
 			}
 	});
-
+	console.log(cookieAccessed);
+	if (cookieAccessed) {
+		return true;
+	}
 	if (timeout) {
 		throw(new Error("Timeout"));
 	}
 	dom.window.close();
-	return output.includes(flag);
+	return false;
 }
 
 module.exports = detectXSS;
