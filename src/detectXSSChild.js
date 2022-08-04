@@ -7,5 +7,11 @@ process.on("message", (data) => {
 			external: true,
 		}
 	});
-	process.send({exploited: vm.run(`const {detectXSS} = require("./detectXSS.cjs"); return detectXSS('${data.body.replaceAll(/\n/g, "\\n").replaceAll(/"/g, "\\'")}', "${data.flag}")`), requestID: data.requestID});
+	let flagInfo = {requestID: data.requestID};
+	try {
+		flagInfo.exploited = vm.run(`const {detectXSS} = require("./detectXSS.cjs"); return detectXSS('${data.body.replaceAll(/\n/g, "\\n").replaceAll(/"/g, "\\'")}', "${data.flag}")`);
+	} catch (err) {
+		flagInfo.error = err.message;
+	}
+	process.send(flagInfo);
 });
