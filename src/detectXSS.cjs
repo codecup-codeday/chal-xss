@@ -2,8 +2,6 @@
 const jsdom = require("jsdom");
 
 const detectXSS = (htmlSnippet) => {
-	let output = "";
-
 	let timeout = false;
 	let cookieAccessed = false;
 	const dom = new jsdom.JSDOM(htmlSnippet, {
@@ -16,7 +14,7 @@ const detectXSS = (htmlSnippet) => {
 						window.close();
 					}
 				});
-			
+
 				window.setImmediate = () => {};
 				window.setInterval = () => {};
 				window.clearImmediate = () => {};
@@ -26,15 +24,15 @@ const detectXSS = (htmlSnippet) => {
 				window.setTimeout = () => {};
 			}
 	});
-	console.log(cookieAccessed);
+	
 	if (cookieAccessed) {
 		return true;
+	} else if (timeout) {
+		throw(new Error("Timeout (Please make sure your code runs in under 5 seconds)"));
+	} else {
+		dom.window.close();
+		return false;
 	}
-	if (timeout) {
-		throw(new Error("Timeout"));
-	}
-	dom.window.close();
-	return false;
 }
 
 module.exports = detectXSS;

@@ -1,13 +1,13 @@
 import { NodeVM, VMScript } from "vm2";
 import fs from "fs";
 
-const script = new VMScript(fs.readFileSync("./detectXSS.cjs"));
+const script = new VMScript(fs.readFileSync("./detectXSS.cjs", "utf8"));
 
 process.on("message", (data) => {
 	const vm = new NodeVM({
-		console: 'none',
+		console: "none",
 		require: {
-			external: ["jsdom"],
+			external: ["jsdom"]
 		}
 	});
 	let flagInfo = {requestID: data.requestID};
